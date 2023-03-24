@@ -1,0 +1,125 @@
+\documentclass[12pt, letterpaper]{article}
+\usepackage{amsmath}
+\usepackage[margin=1.25in]{geometry}
+\usepackage{pgfplots}
+
+% \usetikzlibrary{external}
+\usetikzlibrary{math}
+% \tikzexternalize
+\pgfplotsset{width=6in, height=3in, compat=1.9, axis lines=middle, }
+\usepgfplotslibrary{external, groupplots}
+\tikzmath{
+  function sintaylor(\x) {
+    return 1;
+    % \ans = 0;
+    % \sign = 1;
+    % % return 1.5;
+    % int \i;
+    % for \i in {0, 1, ..., 20} {
+    %   \ans = \ans + 1;
+    %   \ans = \ans + \sign * x^(\i * 2 + 1) / factorial(\i * 2 + 1);
+    %   \sign = \sign * -1;
+    % };
+    % return \ans;
+  };
+}
+
+\title{Calculating Functions with Taylor Polynomials}
+\author{Thomas Marshall}
+\date{March 2023}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\pagebreak
+
+\section{Trigonometric Functions}
+
+\subsection{Sine and Cosine}
+We can use the Maclaurin Series for sine and cosine and calculate several terms of the series using a for loop. The series are shown below.
+\[ \sin(x) = \sum_{n=0}^{\infty}\left(-1\right)^{n}\frac{x^{2n+1}}{\left(2n+1\right)!} \]
+\[ \cos(x) = \sum_{n=0}^{\infty}\left(-1\right)^{n}\frac{x^{2n}}{\left(2n\right)!} \]
+
+With just 11 terms (21st degree Taylor polynomial), the sums above will be extremely accurate for small inputs. However, the margin of error increase quickly as we use larger inputs.
+
+\begin{center}
+  \begin{tikzpicture}
+  \begin{axis}[ymin=-2, ymax=2, restrict y to domain=-2:2]
+    \addplot[samples=100, domain=-12:12, smooth]{sin(deg(x))};
+    \addlegendentry{sin(x)};
+    \addplot[samples=100, domain=-12:12, smooth, color=blue]{
+      x^1/factorial(1) - x^3/factorial(3) + x^5/factorial(5) - x^7/factorial(7) + x^9/factorial(9) - x^11/factorial(11) + x^13/factorial(13) - x^15/factorial(15) + x^17/factorial(17) - x^19/factorial(19) + x^21/factorial(21)
+    };
+    \addlegendentry{$P_{21}(x)$};
+  \end{axis}
+  \end{tikzpicture}
+\end{center}
+
+For better accuracy with larger inputs, we need to transform all inputs to be in the range $0 \leq x < 2\pi$.
+Because sine and cosine have a period of $2\pi$, the below is true.
+
+\[ x_m = x \bmod{2\pi} \]
+\[ \sin(x) = \sin(x_m) \]
+\[ \cos(x) = \cos(x_m) \]
+
+Instead of calculating $\sin(x)$ and $\cos(x)$ directly, we can calculate $\sin(x_m)$ and $\cos(x_m)$.
+
+\subsection{Inverse Tangent}
+It is possible to construct an infinite series that converges to $\arctan(x)$ and use it to accurately calculate values of $\arctan(x)$. First take the derivative and then rewrite.
+
+\[ \frac{d}{dx} \arctan(x) = \frac{1}{1 + x^2} = \frac{1}{1 - (-x^2)}\]
+
+Using the formula for the sum of an infinite geometric series gives us the following.
+\[ \frac{1}{1 - (-x^2)} = 1 - x^2 + x^4 - x^6 + ... + (-x^2)^n + ... \]
+
+% Integrate to find $\arctan$
+\begin{align*}
+  \arctan(x) &= \int \left(1 - x^2 + x^4 - x^6 + ... + (-x^2)^n + ...\right)dx \\ 
+  &= x - \frac{x^3}{3} + \frac{x^5}{5} - \frac{x^7}{7} + ... = \sum_{n=1}^{\infty}\left(-1\right)^{n}\frac{x^{2n+1}}{2n+1}
+\end{align*}
+
+Now, we can use a for loop to calculate $arctan(x)$ for values between 0 and 1. This method is very accurate with 25 or more terms.
+
+\subsection{Other Trig Functions}
+Since we can already calculate $sin(x)$ and $cos(x)$, it is easy to calculate other trig functions using basic trig identities.
+
+\[ \tan(x) = \frac{sin(x)}{cos(x)} \qquad \cot(x) = \frac{cos(x)}{sin(x)}  \qquad \csc(x) = \frac{1}{sin(x)} \qquad \sec(x) = \frac{1}{cos(x)}
+\]
+
+\section{Exponential}
+\subsection{Natural Exponential}
+The Maclaurin series for $e^x$ is shown below. Using this formula with around 30 to 40 terms, it is simple to accurately calculate $e^x$ for all $x>0$.
+
+\[ e^x = \sum_{n=0}^{\infty}\frac{x^n}{n!} \]
+
+\subsection{Other Bases}
+
+To calculate $b^x$, we can use exponent rules to rewrite it using base $e$.
+
+\[ b^x = c^{b\log_c(x)} \quad \Rightarrow \quad b^x = e^{b\ln(x)} \]
+
+\section{Logarithms}
+\subsection{Natural Log}
+The Taylor series for $\ln(x)$ centered around $x=0$ is shown below.
+
+\[ \ln(x) = \sum_{n=1}^{\infty}\frac{\left(-1\right)^{n+1}\left(x-1\right)^{n}}{n} \]
+
+Because the range of convergence of this function is $0<x\leq2$, it cannot be used to calculate values outside of that range. In order to calculate any value greater than 0, we need a way to transform the inputs to be inside the interval of convergence. The below is true because of log rules.
+
+\[ \ln(ab) = \ln(a) + \ln(b) \]
+\[ \ln(a^b) = b\ln(a) \]
+
+We can rewrite the $\ln$ function using this rule.
+
+\[ \ln(x) = \ln\left(\frac{2^bx}{2^b}\right) = \ln\left(\frac{x}{2^b}\right) - \ln\left(2^b\right) = \ln\left(\frac{x}{2^b}\right) - b\ln\left(2\right) \]
+
+Where $b$ is the smallest positive integer such that $2^b>x$. We can easily find $b$ in code by starting with a variable equal 1, and doubling its value until it is greater than $x$. $b$ is the number of times the loop was run.
+
+\subsection{Other Bases}
+Since we can calculate $ln(x)$ we can calculate logarithms for all bases using the change of base rule.
+
+\[ \log_b(x) = \frac{\log_d(x)}{\log_d(b)} \quad \Rightarrow \quad \log_b(x) = \frac{\ln(x)}{\ln(b)} \]
+
+\end{document}
