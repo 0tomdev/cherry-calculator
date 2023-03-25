@@ -80,13 +80,40 @@ Using the formula for the sum of an infinite geometric series gives us the follo
   &= x - \frac{x^3}{3} + \frac{x^5}{5} - \frac{x^7}{7} + ... = \sum_{n=1}^{\infty}\left(-1\right)^{n}\frac{x^{2n+1}}{2n+1}
 \end{align*}
 
-Now, we can use a for loop to calculate $arctan(x)$ for values between 0 and 1. This method is very accurate with 25 or more terms.
+Now, we can use a for loop to calculate $\arctan(x)$ for values between 0 and 1. This method is very accurate with 25 or more terms.
 
 \subsection{Other Trig Functions}
-Since we can already calculate $sin(x)$ and $cos(x)$, it is easy to calculate other trig functions using basic trig identities.
+Since we can already calculate $\sin(x)$ and $\cos(x)$, it is easy to calculate other trig functions using basic trig identities.
 
-\[ \tan(x) = \frac{sin(x)}{cos(x)} \qquad \cot(x) = \frac{cos(x)}{sin(x)}  \qquad \csc(x) = \frac{1}{sin(x)} \qquad \sec(x) = \frac{1}{cos(x)}
+\[ \tan(x) = \frac{\sin(x)}{\cos(x)} \qquad \cot(x) = \frac{\cos(x)}{\sin(x)}  \qquad \csc(x) = \frac{1}{\sin(x)} \qquad \sec(x) = \frac{1}{\cos(x)}
 \]
+
+\section{Logarithms}
+\subsection{Natural Log}
+The Taylor series for $\ln(x)$ centered around $x=0$ is shown below.
+
+\[ \ln(x) = \sum_{n=1}^{\infty}\frac{\left(-1\right)^{n+1}\left(x-1\right)^{n}}{n} \]
+
+Because the range of convergence of this series is $0<x<2$, it cannot be used to calculate values outside of that range. In order to calculate any value greater than 0, we need a way to transform the inputs to be inside the interval of convergence. The below is true because of log rules.
+
+\[ \ln(ab) = \ln(a) + \ln(b) \]
+\[ \ln(a^b) = b\ln(a) \]
+
+We can rewrite the $\ln$ function using this rule.
+
+\[ \ln(x) = \ln\left(\frac{2^bx}{2^b}\right) = \ln\left(\frac{x}{2^b}\right) - \ln\left(2^b\right) = \ln\left(\frac{x}{2^b}\right) - b\ln\left(2\right) \]
+
+Where $b$ is the smallest positive integer such that $2^b>x$. We can easily find $b$ in code by starting with a variable equal 1, and doubling its value until it is greater than $x$. $b$ is the number of times the loop was run.
+
+\subsubsection{The Natural Log of 2}
+Our method for calculating natural log requires that we know the value of $\ln(2)$, which is outside of the interval of convergence. So we will need to calculate $\ln(2)$ beforehand and store the value. If we find two values that multiply to 2, then we can use log rules to find $\ln(2)$.
+
+\[ \ln(2) = \ln\left(\frac{4}{3} * \frac{3}{2}\right) = \ln\left(\frac{4}{3}\right) + \ln\left(\frac{3}{2}\right) \approx 0.69314718056 \]
+
+\subsection{Other Bases}
+Since we can calculate $\ln(x)$ we can calculate logarithms for all bases using the change of base rule.
+
+\[ \log_b(x) = \frac{\log_d(x)}{\log_d(b)} \quad \Rightarrow \quad \log_b(x) = \frac{\ln(x)}{\ln(b)} \]
 
 \section{Exponential}
 \subsection{Natural Exponential}
@@ -100,26 +127,6 @@ To calculate $b^x$, we can use exponent rules to rewrite it using base $e$.
 
 \[ b^x = c^{b\log_c(x)} \quad \Rightarrow \quad b^x = e^{b\ln(x)} \]
 
-\section{Logarithms}
-\subsection{Natural Log}
-The Taylor series for $\ln(x)$ centered around $x=0$ is shown below.
-
-\[ \ln(x) = \sum_{n=1}^{\infty}\frac{\left(-1\right)^{n+1}\left(x-1\right)^{n}}{n} \]
-
-Because the range of convergence of this function is $0<x\leq2$, it cannot be used to calculate values outside of that range. In order to calculate any value greater than 0, we need a way to transform the inputs to be inside the interval of convergence. The below is true because of log rules.
-
-\[ \ln(ab) = \ln(a) + \ln(b) \]
-\[ \ln(a^b) = b\ln(a) \]
-
-We can rewrite the $\ln$ function using this rule.
-
-\[ \ln(x) = \ln\left(\frac{2^bx}{2^b}\right) = \ln\left(\frac{x}{2^b}\right) - \ln\left(2^b\right) = \ln\left(\frac{x}{2^b}\right) - b\ln\left(2\right) \]
-
-Where $b$ is the smallest positive integer such that $2^b>x$. We can easily find $b$ in code by starting with a variable equal 1, and doubling its value until it is greater than $x$. $b$ is the number of times the loop was run.
-
-\subsection{Other Bases}
-Since we can calculate $ln(x)$ we can calculate logarithms for all bases using the change of base rule.
-
-\[ \log_b(x) = \frac{\log_d(x)}{\log_d(b)} \quad \Rightarrow \quad \log_b(x) = \frac{\ln(x)}{\ln(b)} \]
+Since we can already calculate $e^x$ and $\ln(x)$, using this formula will only take a few lines of code.
 
 \end{document}

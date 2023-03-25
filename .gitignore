@@ -7,6 +7,7 @@ latex/*.fls
 latex/*.log
 latex/*.synctex.gz
 latex/*.toc
+latex/*.pdf
 
 
 # Logs

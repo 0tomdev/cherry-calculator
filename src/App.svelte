@@ -102,6 +102,7 @@
     border-radius: 1rem;
     border: 1px solid gray;
     padding: 0.35em 0.5em;
+    background-color: rgb(59, 59, 59);
   }
 
   .label {

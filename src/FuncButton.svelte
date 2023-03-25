@@ -29,6 +29,7 @@
     background-color: #131313;
     cursor: pointer;
     transition: all 0.25s;
+    color: var(--text-color);
   }
 
   .selected {

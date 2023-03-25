@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "gh-pages": "npm run build && ./scripts/gh-pages.js",
+    "gh-pages": "npm run build && ./gh-pages.js",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
