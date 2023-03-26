@@ -9,7 +9,6 @@
   $: approx = functions[$func](xVal, aVal);
   $: actual = actualFunctions[$func](xVal, aVal);
   $: percentError = Math.abs((approx - actual) / actual) * 100;
-
 </script>
 
 <div style="margin: 0 auto; width: fit-content;">

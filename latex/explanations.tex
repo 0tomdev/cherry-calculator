@@ -54,8 +54,8 @@ With just 11 terms (21st degree Taylor polynomial), the sums above will be extre
     };
     \addlegendentry{$P_{21}(x)$};
 
-    \addplot[thick, samples=50, smooth,domain=0:6,gray, dashed] coordinates {(2*pi,-2)(2*pi,2)};
-    \addplot[thick, samples=50, smooth,domain=0:6,gray, dashed] coordinates {(-2*pi,-2)(-2*pi,2)};
+    \addplot[thick, samples=50, smooth, domain=0:6, red, dashed] coordinates {(2*pi,-2)(2*pi,2)};
+    \addplot[thick, samples=50, smooth, domain=0:6, red, dashed] coordinates {(0.05,-2)(0.05,2)};
   \end{axis}
   \end{tikzpicture}
 \end{center}
@@ -104,7 +104,7 @@ Because the range of convergence of this series is $0<x<2$, it cannot be used to
 
 We can rewrite the $\ln$ function using this rule.
 
-\[ \ln(x) = \ln\left(\frac{2^bx}{2^b}\right) = \ln\left(\frac{x}{2^b}\right) - \ln\left(2^b\right) = \ln\left(\frac{x}{2^b}\right) - b\ln\left(2\right) \]
+\[ \ln(x) = \ln\left(\frac{2^bx}{2^b}\right) = \ln\left(\frac{x}{2^b}\right) + \ln\left(2^b\right) = \ln\left(\frac{x}{2^b}\right) + b\ln\left(2\right) \]
 
 Where $b$ is the smallest positive integer such that $2^b>x$. We can easily find $b$ in code by starting with a variable equal 1, and doubling its value until it is greater than $x$. $b$ is the number of times the loop was run.
 
