@@ -46,7 +46,7 @@ type FunctionsType = Record<FuncType, FType>;
 const sin = (x2: number) => {
   let x = x2 % (2 * Math.PI);
   let result = 0;
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 40; i++) {
     result += ((-1) ** i) * (x ** (2 * i + 1)) / factorial(2 * i + 1);
   }
 
@@ -56,7 +56,7 @@ const sin = (x2: number) => {
 const cos = (x2: number) => {
   let x = x2 % (2 * Math.PI);
   let result = 0;
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 40; i++) {
     result += ((-1) ** i) * (x ** (2 * i)) / factorial(2 * i);
   }
 
@@ -78,6 +78,28 @@ const ln = (x: number) => {
   return lnTaylor(x2) + bExp * ln2;
 }
 
+const naturalExp = (x: number) => {
+  let result = 0;
+  for (let i = 0; i < 40; i++) {
+    result += (x ** i) / factorial(i);
+  }
+  return result;
+}
+
+export const twoParams: Record<FuncType, boolean> = {
+  sin: false,
+  cos: false,
+  tan: false,
+  csc: false,
+  sec: false,
+  cot: false,
+  arctan: false,
+  ln: false,
+  exp: true,
+  naturalExp: false,
+  logBase: true
+}
+
 const functions: FunctionsType = {
   sin,
   cos,
@@ -95,17 +117,9 @@ const functions: FunctionsType = {
     return result;
   },
   ln: (x) => ln(x),
-  exp: (x, a) => {
-    return 420;
-  },
-  logBase: (x, a) => ln(x) / ln(a),
-  naturalExp: (x) => {
-    let result = 0;
-    for (let i = 0; i < 35; i++) {
-      result += (x ** i) / factorial(i);
-    }
-    return result;
-  }
+  exp: (x, b) => naturalExp(x * ln(b)),
+  logBase: (x, b) => ln(x) / ln(b),
+  naturalExp
 };
 
 export const actualFunctions: FunctionsType = {

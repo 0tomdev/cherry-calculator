@@ -1,10 +1,10 @@
 <script lang="ts">
   import FuncButton from "./FuncButton.svelte";
   import { func } from "./stores";
-  import functions, { actualFunctions } from "./calculations";
+  import functions, { actualFunctions, twoParams } from "./calculations";
 
-  let xVal = 0;
-  let aVal = 0;
+  let xVal = 0.5;
+  let aVal = 2;
 
   $: approx = functions[$func](xVal, aVal);
   $: actual = actualFunctions[$func](xVal, aVal);
@@ -39,12 +39,12 @@
   <div class="inputs-container section">
     <div class="input-group">
       <p class="label">Value for x</p>
-      <input type="number" bind:value={xVal} />
+      <input type="number" step="0.1" bind:value={xVal} />
     </div>
 
-    <div class="input-group">
-      <p class="label">Value for a</p>
-      <input type="number" bind:value={aVal} />
+    <div class="input-group" style={!twoParams[$func] ? "opacity: 40%;" : ""}>
+      <p class="label">Value for b</p>
+      <input type="number" bind:value={aVal} disabled={!twoParams[$func]} />
     </div>
   </div>
 
@@ -52,9 +52,9 @@
     <p class="num-label">Calculating</p>
     <p class="num">
       {#if $func === "exp"}
-        a<sup>x</sup>
+        b<sup>x</sup>
       {:else if $func === "logBase"}
-        log<sub>a</sub>(x)
+        log<sub>b</sub>(x)
       {:else if $func == "naturalExp"}
         e<sup>x</sup>
       {:else}
@@ -103,6 +103,9 @@
     border: 1px solid gray;
     padding: 0.35em 0.5em;
     background-color: rgb(59, 59, 59);
+  }
+  input[type="number"]:disabled {
+    color: unset;
   }
 
   .label {

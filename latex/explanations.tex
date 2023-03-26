@@ -53,11 +53,14 @@ With just 11 terms (21st degree Taylor polynomial), the sums above will be extre
       x^1/factorial(1) - x^3/factorial(3) + x^5/factorial(5) - x^7/factorial(7) + x^9/factorial(9) - x^11/factorial(11) + x^13/factorial(13) - x^15/factorial(15) + x^17/factorial(17) - x^19/factorial(19) + x^21/factorial(21)
     };
     \addlegendentry{$P_{21}(x)$};
+
+    \addplot[thick, samples=50, smooth,domain=0:6,gray, dashed] coordinates {(2*pi,-2)(2*pi,2)};
+    \addplot[thick, samples=50, smooth,domain=0:6,gray, dashed] coordinates {(-2*pi,-2)(-2*pi,2)};
   \end{axis}
   \end{tikzpicture}
 \end{center}
 
-For better accuracy with larger inputs, we need to transform all inputs to be in the range $0 \leq x < 2\pi$.
+For better accuracy with larger inputs, we need to transform all inputs to be in the range $0 \leq x < 2\pi$ (shown by the dotted lines).
 Because sine and cosine have a period of $2\pi$, the below is true.
 
 \[ x_m = x \bmod{2\pi} \]
@@ -108,7 +111,7 @@ Where $b$ is the smallest positive integer such that $2^b>x$. We can easily find
 \subsubsection{The Natural Log of 2}
 Our method for calculating natural log requires that we know the value of $\ln(2)$, which is outside of the interval of convergence. So we will need to calculate $\ln(2)$ beforehand and store the value. If we find two values that multiply to 2, then we can use log rules to find $\ln(2)$.
 
-\[ \ln(2) = \ln\left(\frac{4}{3} * \frac{3}{2}\right) = \ln\left(\frac{4}{3}\right) + \ln\left(\frac{3}{2}\right) \approx 0.69314718056 \]
+\[ \ln(2) = \ln\left(\frac{4}{3} \cdot \frac{3}{2}\right) = \ln\left(\frac{4}{3}\right) + \ln\left(\frac{3}{2}\right) \approx 0.69314718056 \]
 
 \subsection{Other Bases}
 Since we can calculate $\ln(x)$ we can calculate logarithms for all bases using the change of base rule.
@@ -123,9 +126,9 @@ The Maclaurin series for $e^x$ is shown below. Using this formula with around 30
 
 \subsection{Other Bases}
 
-To calculate $b^x$, we can use exponent rules to rewrite it using base $e$.
+To calculate $b^x$, we can use log rules to rewrite it using base $e$.
 
-\[ b^x = c^{b\log_c(x)} \quad \Rightarrow \quad b^x = e^{b\ln(x)} \]
+\[ b^x = e^{\ln(b^x)} \quad \Rightarrow \quad b^x = e^{x\ln(b)} \]
 
 Since we can already calculate $e^x$ and $\ln(x)$, using this formula will only take a few lines of code.
 
