@@ -2,6 +2,14 @@
 \usepackage{amsmath}
 \usepackage[margin=1.25in]{geometry}
 \usepackage{pgfplots}
+\usepackage{hyperref}
+
+\hypersetup{
+  colorlinks=true,
+  % filecolor=magenta,
+  urlcolor=blue,
+  linktoc=none
+}
 
 % \usetikzlibrary{external}
 \usetikzlibrary{math}
@@ -80,10 +88,21 @@ Using the formula for the sum of an infinite geometric series gives us the follo
 % Integrate to find $\arctan$
 \begin{align*}
   \arctan(x) &= \int \left(1 - x^2 + x^4 - x^6 + ... + (-x^2)^n + ...\right)dx \\ 
-  &= x - \frac{x^3}{3} + \frac{x^5}{5} - \frac{x^7}{7} + ... = \sum_{n=1}^{\infty}\left(-1\right)^{n}\frac{x^{2n+1}}{2n+1}
+  &= x - \frac{x^3}{3} + \frac{x^5}{5} - \frac{x^7}{7} + ... = \sum_{n=0}^{\infty}\left(-1\right)^{n}\frac{x^{2n+1}}{2n+1}
 \end{align*}
 
-Now, we can use a for loop to calculate $\arctan(x)$ for values between 0 and 1. This method is very accurate with 25 or more terms.
+We can use a for loop to evaluate $\arctan(x)$ with 40 terms for pretty good accuracy. However, even though the interval of convergence of this series is $-1 \leq x \leq 1$, the accuracy greatly decreases for x values above 0.7. The solution is to reduce the input to our arctan function to be less than 0.7. The identity below will be extremely helpful.
+
+\[ \arctan(x) = \arctan(c) + \arctan\left(b\right) \]
+\[ b = \frac{x-c}{1+cx} \]
+
+If we set c to 0.5, then b will always be between -0.5 and 0.5, if $0.7 \leq x \leq 1$. This is perfect because the Taylor Series is extremely accurate in the range $0.5 \leq x \leq 0.5$. For our final algorithm, we will return the Taylor series approximation if $x < 0.6$. Otherwise, we will use the identity. The final function will look like this.
+
+\[ p(x) = \sum_{n=0}^{40}\left(-1\right)^{n}\frac{x^{2n+1}}{2n+1} \]
+\[ f(x) = \begin{cases}
+  p(x) & \text{if } x \leq 0.7 \\
+  \arctan(0.5) + \arctan\left(\dfrac{x-0.5}{1+0.5x}\right) & \text{if } x > 0.7
+\end{cases} \]
 
 \subsection{Other Trig Functions}
 Since we can already calculate $\sin(x)$ and $\cos(x)$, it is easy to calculate other trig functions using basic trig identities.
@@ -131,5 +150,9 @@ To calculate $b^x$, we can use log rules to rewrite it using base $e$.
 \[ b^x = e^{\ln(b^x)} \quad \Rightarrow \quad b^x = e^{x\ln(b)} \]
 
 Since we can already calculate $e^x$ and $\ln(x)$, using this formula will only take a few lines of code.
+
+\section{Implementation}
+
+All the algorithms described can be seen at \href{http://cherry.thomasdev.xyz}{this website}. The code for these algorithms is written in TypeScript and can be seen on \href{https://github.com/mthomas24/cherry-calculator/blob/main/src/calculations.ts}{GitHub}.
 
 \end{document}

@@ -12,20 +12,6 @@ const lnTaylor = (x: number, iterations: number = 40) => {
   return result;
 }
 
-// ln(2)
-// first one: https://en.wikipedia.org/wiki/Natural_logarithm_of_2#Binary_rising_constant_factorial
-
-// const ln2 = (() => {
-//   let result = 0;
-//   // let sign = 1;
-
-//   for (let i = 1; i < 40; i++) {
-//     result += 1 / (2 ** i * i);
-//   }
-
-//   return result;
-// })();
-
 const ln2 = lnTaylor(5/4, 100) + lnTaylor(8/5, 100);
 
 console.log("Approx ln(2): ", ln2);
@@ -100,6 +86,19 @@ export const twoParams: Record<FuncType, boolean> = {
   logBase: true
 }
 
+function arctanTaylor(val: number) {
+  let result = 0;
+
+  for (let i = 0; i < 40; i++) {
+    result += ((-1) ** i) * (val ** (2 * i + 1)) / (2 * i + 1);
+  }
+
+  return result;
+}
+
+const arctanConst = 0.5;
+const arctanConstValue = arctanTaylor(arctanConst);
+
 const functions: FunctionsType = {
   sin,
   cos,
@@ -108,13 +107,12 @@ const functions: FunctionsType = {
   sec: x => 1 / cos(x),
   cot: x => cos(x) / sin(x),
   arctan: x => {
-    let result = 0;
+    if (x <= 0.7) return arctanTaylor(x);
 
-    for (let i = 0; i < 40; i++) {
-      result += ((-1) ** i) * (x ** (2 * i + 1)) / (2 * i + 1);
-    }
+    const newVal = (x - arctanConst) / (1 + x * arctanConst);
 
-    return result;
+    return arctanConstValue + arctanTaylor(newVal);
+    
   },
   ln: (x) => ln(x),
   exp: (x, b) => naturalExp(x * ln(b)),

@@ -2,9 +2,16 @@
   import FuncButton from "./FuncButton.svelte";
   import { func } from "./stores";
   import functions, { actualFunctions, twoParams } from "./calculations";
+  import NumberFormatter from "./NumberFormatter.svelte";
 
   let xVal = 0.5;
   let aVal = 2;
+
+  // function formatNumber(num: number): string {
+  //   const str = num.toString();
+
+  //   if (!str.includes("e")) return str;
+  // }
 
   $: approx = functions[$func](xVal, aVal);
   $: actual = actualFunctions[$func](xVal, aVal);
@@ -68,13 +75,17 @@
     <p class="num">{actual}</p>
 
     <p class="num-label">Percent errorr</p>
-    <p class="num">{percentError}%</p>
+    <p class="num">
+      <!-- <NumberFormatter num={percentError} />% -->
+      {percentError}%
+    </p>
   </div>
 
   <div class="card">
     <p class="card-title">Pictures</p>
-    <img src="cherry.jpeg" height="300" alt="Mr. Cherry" />
-    <img src="cherry-sad.jpeg" height="300" alt="Mr. Cherry" />
+    <img src="cherry.jpeg" height="350" alt="Mr. Cherry" />
+    <img src="cherry_sad.jpeg" height="350" alt="Mr. Cherry" />
+    <img src="christian_values.jpg" height="350" alt="Integrating Christian Values" />
   </div>
 </div>
 
