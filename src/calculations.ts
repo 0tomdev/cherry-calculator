@@ -12,11 +12,12 @@ const lnTaylor = (x: number, iterations: number = 40) => {
   return result;
 }
 
-const ln2 = lnTaylor(5/4, 100) + lnTaylor(8/5, 100);
+// const ln2 = lnTaylor(5/4, 100) + lnTaylor(8/5, 100);
+const LN1pt4 = lnTaylor(1.4);
 
-console.log("Approx ln(2): ", ln2);
-console.log("Real ln(2): ", Math.log(2));
-console.log("Difference: ", Math.abs(ln2 - Math.log(2)));
+console.log("Approx ln(2): ", LN1pt4);
+console.log("Real ln(2): ", Math.log(1.4));
+console.log("Difference: ", Math.abs(LN1pt4 - Math.log(1.4)));
 
 function factorial(x: number): number {
   if (x <= 0) return 1;
@@ -50,18 +51,16 @@ const cos = (x2: number) => {
 }
 
 const ln = (x: number) => {
-  if (x === 2) return ln2;
-
   let b = 1;
   let bExp = 0;
   while (b < x) {
-    b *= 2;
+    b *= 1.4;
     bExp++;
   }
 
   let x2 = x / b;
   
-  return lnTaylor(x2) + bExp * ln2;
+  return lnTaylor(x2) + bExp * LN1pt4;
 }
 
 const naturalExp = (x: number) => {
@@ -114,7 +113,7 @@ const functions: FunctionsType = {
     return arctanConstValue + arctanTaylor(newVal);
     
   },
-  ln: (x) => ln(x),
+  ln,
   exp: (x, b) => naturalExp(x * ln(b)),
   logBase: (x, b) => ln(x) / ln(b),
   naturalExp

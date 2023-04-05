@@ -82,7 +82,7 @@
   </div>
 
   <div class="card">
-    <p class="card-title">Pictures</p>
+    <p class="card-title">Zoe's pictures</p>
     <img src="cherry.jpeg" height="350" alt="Mr. Cherry" />
     <img src="cherry_sad.jpeg" height="350" alt="Mr. Cherry" />
     <img src="christian_values.jpg" height="350" alt="Integrating Christian Values" />
