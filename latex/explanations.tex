@@ -68,7 +68,7 @@ With just 11 terms (21st degree Taylor polynomial), the sums above will be extre
   \end{tikzpicture}
 \end{center}
 
-For better accuracy with larger inputs, we need to transform all inputs to be in the range $0 \leq x < 2\pi$ (shown by the dotted lines).
+For better accuracy with larger inputs, we need to transform all inputs to be in the interval $0 \leq x < 2\pi$ (shown by the dotted lines).
 Because sine and cosine have a period of $2\pi$, the below is true.
 
 \[ x_m = x \bmod{2\pi} \]
@@ -114,7 +114,7 @@ The solution is to reduce the input to our arctan function to be less than 0.7. 
 \[ \arctan(x) = \arctan(c) + \arctan\left(b\right) \]
 \[ b = \frac{x-c}{1+cx} \]
 
-If we set c to 0.5, then b will always be between -0.5 and 0.5, if $0.7 \leq x \leq 1$. This is perfect because the Taylor Series is extremely accurate in the range $0.5 \leq x \leq 0.5$. For our final algorithm, we will return the Taylor series approximation if $x < 0.6$. Otherwise, we will use the identity. The final function will look like this.
+If we set c to 0.5, then b will always be between -0.5 and 0.5, if x is between 0.7 and 1. This is perfect because the Taylor Series is extremely accurate in the interval $0 \leq x \leq 0.5$. For our final algorithm, we will return the Taylor series approximation if $x \leq 0.7$. Otherwise, we will use the identity. The final function will look like this.
 
 \[ p(x) = \sum_{n=0}^{40}\left(-1\right)^{n}\frac{x^{2n+1}}{2n+1} \]
 \[ f(x) = \begin{cases}
@@ -152,7 +152,7 @@ Because the range of convergence of this series is $0<x<2$, it cannot be used to
   \end{tikzpicture}
 \end{center}
 
-Since we want to be able to calculate any value for $x>0$, we need a way to transform the inputs to be inside the desired interval. The below is true because of log rules.
+Since we want to be able to calculate any value of $\ln(x)$ for $x>0$, we need a way to transform the inputs to be inside the desired interval. The below is true because of log rules.
 
 \[ \ln(ab) = \ln(a) + \ln(b) \]
 \[ \ln(a^b) = b\ln(a) \]
