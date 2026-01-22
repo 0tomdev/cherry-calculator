@@ -81,7 +81,7 @@
     </p>
   </div>
 
-  <div class="card">
+  <div class="card" style="display: none;">
     <p class="card-title">Zoe's pictures</p>
     <img src="cherry.jpeg" height="350" alt="Mr. Cherry" />
     <img src="cherry_sad.jpeg" height="350" alt="Mr. Cherry" />
